@@ -2,11 +2,61 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
+			"style":{
+				"navigationStyle":"custom"
+			}
+			
+		},
+		{
+			"path": "pages/message/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "消息"
+			}
+		},
+		{
+			"path": "pages/shoppingCart/index",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+			"path": "pages/member/index",
+			"style": {
+				"navigationBarTitleText": "会员中心"
 			}
 		}
 	],
+	"tabBar":{
+		"color":"#6c737b",
+		"selectColor":"##0BABFE",
+		"backgroundColor":"#fafafa",
+		"list":[
+			{
+				"pagePath":"pages/index/index",
+				"text":"首页",
+				"iconPath":"static/images/index/gray_home.png",
+				"selectedIconPath":"static/images/index/blue_home.png"
+			},
+			{
+				"pagePath":"pages/message/index",
+				"text":"消息",
+				"iconPath":"static/images/index/gray_info.png",
+				"selectedIconPath":"static/images/index/blue_info.png"
+			},
+			{
+				"pagePath":"pages/shoppingCart/index",
+				"text":"购物车",
+				"iconPath":"static/images/index/gray_shop.png",
+				"selectedIconPath":"static/images/index/blue_shop.png"
+			},
+			{
+				"pagePath":"pages/member/index",
+				"text":"会员中心",
+				"iconPath":"static/images/index/gray_person.png",
+				"selectedIconPath":"static/images/index/blue_person.png"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
