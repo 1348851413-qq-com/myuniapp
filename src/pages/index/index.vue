@@ -783,5 +783,5 @@
 		position: absolute;
 		right:10upx;
 		bottom: 10upx;
-	}
+	} 
 </style>
