@@ -1,21 +1,21 @@
 <template>
     <view class="bus_list">
-        <view class="bus_item">
-            <image src="/static/images/index/sy_icon_rwtc.png" class="cover">
+        <view class="bus_item" v-for="(v,k) in list" :key="k">
+            <image :src="'/api2'+v.img" class="cover">
             <view class="title clearfix">
-                <view>标题标题标题标题标题标题标题标题</view>
-                <view class="tag">网络</view>
+                <view>{{v.title}}</view>
+                <view class="tag">{{v.name_cate}}</view>
             </view>
             <view class="age clearfix">
-                <view>年限：10年</view>
-                <view>门店：2222个</view>
+                <view>年限：{{v.age}}年</view>
+                <view>门店：{{tool.filterNum(v.num_store)}}个</view>
             </view>
             <view class="address">
-                <view>福建省</view>
-                <view>10人已申请</view>
+                <view>{{v.city}}</view>
+                <view>{{tool.filterNum(v.num_store)}}人已申请</view>
             </view>
             <view class="price">
-                <view>0-10万</view>
+                <view>{{v.investment1}}-{{v.investment2}}万</view>
                 <image src="~@/static/images/business/sjzlxq_zxsc_icon1.png">
             </view>
         </view>
@@ -32,6 +32,12 @@ export default {
     onLoad(){
 
     },
+    props:{
+        list:{
+            type:Array,
+            default:()=>[]
+        }
+    },
     methods:{
 
     }
@@ -46,6 +52,7 @@ export default {
     .bus_list .bus_item{
         flex: 0 0 50%;
         box-sizing: border-box;
+        margin-bottom: 20upx;
     }
     .bus_list .bus_item:nth-child(odd){
         padding-right: 8upx;

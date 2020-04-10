@@ -1,65 +1,36 @@
 <template>
     <view class="web-list">
-        <view class="web-item">
+        <view class="web-item" v-for="(v,k) in list" :key="k">
             <view class="cover">
-                <image src="/static/images/index/sy_banner_zsjm.png">
+                <image :src="'/api2'+v.image">
             </view>
             <view class="web-msg">
                 <view class="title clearfix mb10">
-                    <view>标题标题</view>
-                    <view class="default-tag">新闻资讯</view>
+                    <view>{{v.name}}</view>
+                    <view class="default-tag">{{v.cid1name}}</view>
                 </view>
                 <view class="clearfix mb10">
-                    <view class="autochain"></view>
-                    <view class="bd-weight">9</view>
-                    <view class="list-url">www.baidu.com</view>
+                    <view class="autochain" v-if="v.autochain==2"></view>
+                    <view class="bd-weight">{{v.bdweight}}</view>
+                    <view class="list-url">{{v.url}}</view>
                     <view></view>
                 </view>
-                <view class="clearfix mb10">
-                    <view class="goods-type">友情链接</view>
+                <view class="clearfix mb10" v-if="goodsType==1">
+                    <view class="goods-type">{{v.type}}</view>
                 </view>
-                <view class="clearfix mb10">
-                    <view class="show-type">直显风格</view>
-                    <view class="show-type">首页</view>
+                <view class="clearfix mb10" v-if="showType==1">
+                    <view class="show-type">{{tool.showStyle(v.show_style)}}</view>
+                    <view class="show-type">{{v.dispage}}</view>
                     <view class="list-url">上链率：99%</view>
                 </view>
-                <view class="price-box">
-                    <view class="price—num price">￥100:00/月</view>
-                    <view class="list-url">销量：999</view>
+                <view class="price-box" v-if="showPrice==1">
+                    <view class="price—num price">￥{{v.price}}/月</view>
+                    <view class="list-url">销量：{{tool.filterNum(v.count)}}</view>
                 </view>
-                <view class="buy">购买</view>
+                <view class="buy" v-if="showBuy==1">购买</view>
             </view>
         </view>
-          <view class="web-item">
-            <view class="cover">
-                <image src="/static/images/index/sy_banner_zsjm.png">
-            </view>
-            <view class="web-msg">
-                <view class="title clearfix mb10">
-                    <view>标题标题</view>
-                    <view class="default-tag">新闻资讯</view>
-                </view>
-                <view class="clearfix mb10">
-                    <view class="autochain"></view>
-                    <view class="bd-weight">9</view>
-                    <view class="list-url">www.baidu.com</view>
-                    <view></view>
-                </view>
-                <view class="clearfix mb10">
-                    <view class="goods-type">友情链接</view>
-                </view>
-                <view class="clearfix mb10">
-                    <view class="show-type">直显风格</view>
-                    <view class="show-type">首页</view>
-                    <view class="list-url">上链率：99%</view>
-                </view>
-                <view class="price-box">
-                    <view class="price—num price">￥100:00/月</view>
-                    <view class="list-url">销量：999</view>
-                </view>
-                <view class="buy">购买</view>
-            </view>
-        </view>
+    
     </view>
 </template>
 <script>
@@ -71,6 +42,28 @@ export default {
     },
     onLoad(){
 
+    },
+    props:{
+        list:{
+            type:Array,
+            default:()=>[]
+        },
+        showType:{
+            type:String,
+            default:'1'
+        },
+        goodsType:{
+            type:String,
+            default:'1'
+        },
+        showPrice:{
+            type:String,
+            default:'1'
+        },
+        showBuy:{
+            type:String,
+            default:'1'
+        }
     },
     methods:{
 
@@ -105,7 +98,7 @@ export default {
         position: relative;
     }
     .web-msg .title view:nth-child(1){
-        font-size: 35upx;
+        font-size: 30upx;
         max-width: 300upx;
         overflow: hidden;
         white-space: nowrap;

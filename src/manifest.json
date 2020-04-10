@@ -53,7 +53,7 @@
 	"quickapp": { /* 快应用特有相关 */
 
 	},
-	"mp-weixin": { /* 微信小程序特有相关 */
+	"mp-weixin": {
 		"appid": "",
 		"setting": {
 			"urlCheck": false
@@ -71,5 +71,21 @@
     },
     "mp-qq" : {
         "usingComponents" : true
-    }
+	},
+	"h5" : {
+		"devServer":{
+			"port":8080,
+			"disableHostCheck":true,
+			"proxy":{
+				"/api2":{
+					"target":"http://v333.api.2898.com",
+					"changeOrigin":true,
+					"secure":false,
+					"pathRewrite":{
+						"^/api2":""
+					}
+				}
+			}
+		}
+	}
 }

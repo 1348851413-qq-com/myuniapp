@@ -1,27 +1,27 @@
 <template>
     <view class="media_list">
-        <view class="media_item">
+        <view class="media_item" v-for="(v,k) in list" :key="k">
             <view class="item_top">
                 <view class="image_box">
-                    <image src="/static/images/index/sy_icon_wzjy.png">
-                    <view class="approve"></view>
+                    <image :src="v.headimg">
+                    <view class="approve"  :class="'approve'+v.verified_ext" v-if="v.verified_ext>1"></view>
                 </view>
                 <view class="msg_box">
                     <view class="title">
-                        <view class="goods_title">标题标题</view>
+                        <view class="goods_title">{{v.wbname}}</view>
                         <view class="vip"></view>
-                        <view class="level">LV.9</view>
-                        <view class="tag">新闻资讯</view>
+                        <view class="level">LV.{{v.urank}}</view>
+                        <view class="tag">{{v.cataname}}</view>
                     </view>
                     <view class="goods_msg">
                         <view class="clearfix">
-                            <view>粉丝：1111</view>
-                            <view>销量：2222</view>
+                            <view>粉丝：{{tool.filterNum(v.fans)}}</view>
+                            <view>销量：{{tool.filterNum(v.num)}}</view>
                         </view>
                          <view class="clearfix">
-                            <view>评论：1111</view>
-                            <view>转发：2222</view>
-                            <view>点赞：2222</view>
+                            <view>评论：{{tool.filterNum(v.p_avg)}}</view>
+                            <view>转发：{{tool.filterNum(v.z_avg)}}</view>
+                            <view>点赞：{{tool.filterNum(v.d_avg)}}</view>
                         </view>
                     </view>
                 </view>
@@ -34,10 +34,10 @@
                     <view>硬广转发</view>
                 </view>
                 <view class="price">
-                    <view>￥111</view>
-                    <view>￥111</view>
-                    <view>￥111</view>
-                    <view>￥111</view>
+                    <view>￥{{v.zrprice}}</view>
+                    <view>￥{{v.urprice}}</view>
+                    <view>￥{{v.zyprice}}</view>
+                    <view>￥{{v.uyprice}}</view>
                 </view>
             </view>
         </view>
@@ -52,6 +52,12 @@ export default {
     },
     onLoad(){
 
+    },
+    props:{
+        list:{
+            type:Array,
+            default:()=>[]
+        }
     },
     methods:{
 
@@ -68,6 +74,7 @@ export default {
     .media_item{
         width: 100%;
         height: 270upx;
+        margin-bottom: 20upx;
     }
     .item_top{
         width: 100%;
@@ -85,13 +92,21 @@ export default {
         border-radius: 50%;
     }
     .approve{
-       width: 30upx;
-       height: 30upx;
-       position: absolute;
-       background: url("~@/static/images/media/approve4.png") no-repeat;
-       background-size: 100%; 
-       right: 0;
-       bottom: 0;
+        width: 30upx;
+        height: 30upx;
+        position: absolute;
+        background: url("~@/static/images/media/approve2.png") no-repeat;
+        background-size: 100%; 
+        right: 0;
+        bottom: 0;
+    }
+    .approve3{
+        background: url("~@/static/images/media/approve3.png") no-repeat;
+        background-size: 100%; 
+    }
+     .approve4{
+        background: url("~@/static/images/media/approve4.png") no-repeat;
+        background-size: 100%; 
     }
     .msg_box{
         width: 500upx;

@@ -12,30 +12,15 @@
 		<view class="index_bd"> 
 			<view class="swiper_wrap">
 				<swiper circular="true">
-					<swiper-item>
+					<swiper-item v-for="(v,k) in data.carousel" :key="k">
 						<view class="swiper-item">
-							<image src="/static/images/index/f3df9edb71289dd0904fbea8ae40c6b5.jpg" alt="">
+							<navigator>
+								<image :src="'/api2'+v.image" >
+							</navigator>
 						</view>
 							
 					</swiper-item>
-					<swiper-item>
-						<view class="swiper-item">
-							<image src="/static/images/index/f3df9edb71289dd0904fbea8ae40c6b5.jpg" alt="">
-						</view>
-							
-					</swiper-item>
-						<swiper-item>
-						<view class="swiper-item">
-							<image src="/static/images/index/f3df9edb71289dd0904fbea8ae40c6b5.jpg" alt="">
-						</view>
-							
-					</swiper-item>
-						<swiper-item>
-						<view class="swiper-item">
-							<image src="/static/images/index/f3df9edb71289dd0904fbea8ae40c6b5.jpg" alt="">
-						</view>
-							
-					</swiper-item>
+					
 				</swiper>
 			</view>
 			<view class="menu_wrap">
@@ -43,16 +28,20 @@
 					<swiper-item >
 						<view class="menu-item">
 							<view v-for="(v,k) in menu.page1" :key="k" class="item-wrap">
-								<image :src="v.img">
-								<view>{{v.title}}</view>
+								<navigator :url="v.src">
+									<image :src="v.img">
+									<view>{{v.title}}</view>
+								</navigator>
 							</view>
 						</view>
 					</swiper-item>	
 					<swiper-item >
 						<view class="menu-item">
 							<view v-for="(v,k) in menu.page2" :key="k" class="item-wrap">
-								<image :src="v.img">
-								<view>{{v.title}}</view>
+								<navigator :url="v.src">
+									<image :src="v.img">
+									<view>{{v.title}}</view>
+								</navigator>
 							</view>
 						</view>
 					</swiper-item>	
@@ -68,14 +57,11 @@
 				</view>
 				<view class="notic-list">
 					<swiper vertical autoplay circular disable-touch="false" duration="1000" style="height:40upx">
-						<swiper-item>
+						<swiper-item v-for="(v,k) in data.notice" :key="k">
 							<view class="notic-item">
-								公告公告1
-							</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="notic-item">
-								公告公告2公告公告1公告公告1公告公告1公告公告1公告公告1
+								<navigator>
+									{{v.title}}
+								</navigator>
 							</view>
 						</swiper-item>
 					</swiper>
@@ -134,10 +120,10 @@
 				</view>
 				<view class="notic-list order-notic">
 					<swiper vertical autoplay circular disable-touch="false" duration="1000" style="height:40upx">
-						<swiper-item>
+						<swiper-item v-for="(v,k) in data.tradingDynamic" :key="k">
 							<view class="notic-item">
-								<view class="order-tag">友情链接</view>
-								<view>公告公告1公告公告1公告公告1公告公告1公告公告1公告公告1公告公告1</view>
+								<view class="order-tag">{{v.goods_type}}</view>
+								<view>{{v.account}}</view>
 							</view>
 						</swiper-item>
 						
@@ -156,8 +142,8 @@
 			<view class="media_banber">
 				<image src="~@/static/images/index/wx_more.png">
 			</view>
-			<mediaWb v-show="mediaType==2"></mediaWb>
-			<mediaWx v-show="mediaType==1"></mediaWx>
+			<mediaWb v-show="mediaType==2" :list="data.wbList"></mediaWb>
+			<mediaWx v-show="mediaType==1" :list="data.wxList"></mediaWx>
 		</view>
 		<view class="module" style="background:none;padding:0;">
 			<view class="module_title">
@@ -166,13 +152,23 @@
 			</view>
 			<scroll-view scroll-x>
 				<view class="hot-media">
-					<view class="media-item">
-						<view class="media-img">
-							<image src="/static/images/index/sy_icon_wzjy.png">
+					<view class="media-item" v-for="(v,k) in data.hotMedia" :key="k">
+						<view v-if="v.wbid">
+							<view class="media-img">
+								<image :src="v.headimg">
+							</view>
+							<view>{{v.wbname}}</view>
+							<view class="fans">阅读：{{tool.filterNum(v.ty_avg)}}</view>
+							<view class="show_btn">查看</view>
 						</view>
-						<view>标题标题</view>
-						<view class="fans">阅读：111</view>
-						<view class="show_btn">查看</view>
+						<view  v-if="v.wechat_id">
+							<view class="media-img">
+								<image :src="'/api2'+v.wx_head_img">
+							</view>
+							<view>{{v.wxname}}</view>
+							<view class="fans">粉丝：{{tool.filterNum(v.fans)}}</view>
+							<view class="show_btn">查看</view>
+						</view>
 					</view>
 				</view>
 
@@ -186,20 +182,10 @@
 			<view class="media_banber">
 				<image src="~@/static/images/index/sy_banner_zsjm.png">
 			</view>
-			<business></business>
+			<business :list="data.business"></business>
 		</view>
 		<view class="high_brand">
-			<view class="high_wrap">
-				<view>
-					<image src="/static/images/index/sy_banner_zsjm.png">
-					<view class="title">标题标题标题标题标题标题</view>
-					<view class="price">1-5万</view>
-				</view>
-				<view>
-					<image src="/static/images/index/sy_banner_zsjm.png">
-					<view class="title">标题标题标题标题标题标题</view>
-					<view class="price">1-5万</view>
-				</view>
+			<view class="high_wrap" >
 				<view>
 					<image src="/static/images/index/sy_banner_zsjm.png">
 					<view class="title">标题标题标题标题标题标题</view>
@@ -212,7 +198,7 @@
 				<view>明星网站</view>
 				<view class="include">收录</view>
 			</view>
-			<web></web>
+			<web :list="data.star" showType="2" goodsType="1" showPrice="2" showBuy="2"></web>
 
 		</view>
 		<view class="hot-rec">
@@ -232,25 +218,25 @@
 				<view class="more_btn">更多&gt;</view>
 			</view>
 			<view class="friend-rec">
-				<view class="rec-item">
-					<image src="~@/static/images/index/sy_banner_zsjm.png" class="rec-cover">
+				<view class="rec-item" v-for="(v,k) in data.friend">
+					<image :src="'/api2'+v.image" class="rec-cover">
 					<view class="title clearfix mb10">
-						<view>标题标题标题标题</view>
-						<view class="default-tag">新闻资讯</view>
+						<view>{{v.name}}</view>
+						<view class="default-tag">{{v.cid1name}}</view>
 					</view>
 					<view class="clearfix mb10">
-						<view class="bd-weight">8</view>
-						<view class="list-url">www.baidu.com</view>
+						<view class="bd-weight">{{v.bdweight}}</view>
+						<view class="list-url">{{v.url}}</view>
 					</view>
 					<view class="clearfix mb10">
-						<view class="show-type">直显风格</view>
-						<view class="show-type">首页</view>
+						<view class="show-type">{{tool.showStyle(v.show_style)}}</view>
+						<view class="show-type">{{v.dispage}}</view>
 					</view>
 					<view class="clearfix mb10">
-						<view class="list-url">销量：888</view>
+						<view class="list-url">销量：{{tool.filterNum(v.count)}}</view>
 					</view>
 					<view class="price">
-						￥111.00/月
+						￥{{v.price}}/月
 					</view>
 					<view class="buy">购买</view>
                 </view>
@@ -262,10 +248,12 @@
 				<view>网站广告推荐</view>
 				<view class="more_btn">更多&gt;</view>
 			</view>
-			<web></web>
+			<web :list="data.fontlink" goodsType="2"></web>
 
 		</view>
+	
 		<footerBox></footerBox>
+		<modal-alert></modal-alert>
 	</view>
 </template>
 
@@ -281,7 +269,7 @@
 				title: 'Hello',
 				menu:{
 					page1:[
-						{title:'友情链接',img:'/static/images/index/sy_icon_ylmm.png',src:''},
+						{title:'友情链接',img:'/static/images/index/sy_icon_ylmm.png',src:'./friendLink'},
 						{title:'商机加盟',img:'/static/images/index/sy_icon_sjlm.png',src:''},
 						{title:'免费换链',img:'/static/images/index/sy_icon_mfhl.png',src:''},
 						{title:'网站广告',img:'/static/images/index/sy_icon_wzgg.png',src:''},
@@ -301,11 +289,20 @@
 					],
 					current:0
 				},
-				mediaType:1
+				mediaType:1,
+				data:{}
 			}
 		},
 		onLoad() {
-
+			this.request({
+				url:this.api_url.index.index,
+				data:{cachetype:"carousel,tradingDynamic,wxList,wbList,hotMedia,business,qualityBusiness,friend,fontlink,star,notice"},
+				callback:(res)=>{
+					this.data=res.data.data
+				}
+			})
+			
+		
 		},
 		methods: {
 			getCurrent(e){
@@ -408,7 +405,7 @@
 		border-radius: 15upx;
 		overflow: hidden;
 	}
-	.swiper-item image{
+	.swiper-item image,.swiper-item navigator{
 		width: 100%;
 		height:100%;
 	}
@@ -458,7 +455,7 @@
 		margin:0 20upx;
 		border-top: 1upx solid #efefef;
 		display: flex;
-		align-items: center
+		align-items: center;
 	}
 	.notic-icon{
 		flex: 1;
@@ -471,6 +468,7 @@
 		flex: 3;
 		height: 40upx;
 		font-size: 25upx;
+		padding-top: 8upx;
 	}
 	.notic-item{
 		overflow: hidden;
@@ -749,12 +747,13 @@
 	}
 	.friend-rec{
 		display: flex;
-	
+		flex-wrap: wrap;
 	}
 	.friend-rec .rec-item{
 		flex: 0 0 50%;
 		box-sizing: border-box;
 		position: relative;
+		margin-bottom: 20upx;
 	}
 	.friend-rec .rec-item:nth-child(odd){
 		padding-right: 8upx;

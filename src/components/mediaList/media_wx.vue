@@ -1,21 +1,21 @@
 <template>
     <view class="media_list">
-        <view class="media_item">
+        <view class="media_item" v-for="(v,k) in list" :key="k">
             <view class="item_top">
                 <view class="image_box">
-                    <image src="/static/images/index/sy_icon_wzjy.png">
+                    <image :src="'/api2'+v.wx_head_img">
                 </view>
                 <view class="msg_box">
                     <view class="title">
-                        <view class="goods_title">标题标题</view>
-                        <view class="tag">新闻资讯</view>
+                        <view class="goods_title">{{v.wxname}}</view>
+                        <view class="tag">{{v.catename}}</view>
                     </view>
                     <view class="goods_msg">
                         <view class="clearfix">
-                            <view>微信号：1111</view>
+                            <view>微信号：{{v.wechat_id}}</view>
                         </view>
                          <view class="clearfix">
-                            <view>阅读数：1111</view>
+                            <view>阅读数：{{tool.filterNum(v.ty_avg)}}</view>
                             <view>头条：2222</view>
                             <view>非头条：2222</view>
                         </view>
@@ -30,10 +30,10 @@
                     <view>非头条硬广</view>
                 </view>
                 <view class="price">
-                    <view>￥111</view>
-                    <view>￥111</view>
-                    <view>￥111</view>
-                    <view>￥111</view>
+                    <view>￥{{v.zrprice}}</view>
+                    <view>￥{{v.urprice}}</view>
+                    <view>￥{{v.zyprice}}</view>
+                    <view>￥{{v.uyprice}}</view>
                 </view>
             </view>
         </view>
@@ -48,6 +48,12 @@ export default {
     },
     onLoad(){
 
+    },
+    props:{
+        list:{
+            type:Array,
+            default:()=>[]
+        }
     },
     methods:{
 
@@ -64,6 +70,7 @@ export default {
     .media_item{
         width: 100%;
         height: 270upx;
+        margin-bottom: 20upx;
     }
     .item_top{
         width: 100%;

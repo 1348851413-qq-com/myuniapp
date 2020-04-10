@@ -8,6 +8,13 @@
 			
 		},
 		{
+			"path": "pages/index/friendLink",
+			"style":{
+				"navigationBarTitleText": "友链买卖"
+			}
+			
+		},
+		{
 			"path": "pages/message/index",
 			"style": {
 				"navigationBarTitleText": "消息"
