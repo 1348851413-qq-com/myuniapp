@@ -81,4 +81,12 @@
         font-size: 30upx;
         line-height: 50upx;
 	}
+	.text-overflow{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	view{
+		box-sizing: border-box;
+	}
 </style>
